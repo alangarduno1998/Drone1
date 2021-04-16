@@ -10,6 +10,8 @@ aspeed = 360/10 # Angular speed Degrees/s
 interval = 0.25
 dInterval = fspeed*interval #distance
 aInterval = aspeed*interval
+width=360
+height = 240
 ###########################################
 x, y, yaw, a= 500, 500, 0, 0
 kp.init()
@@ -79,7 +81,10 @@ while True:
     sleep(0.05)
 
     img = np.zeros((1000, 1000, 3), np.uint8)
+    vision = drone.get_frame_read().frame
+    vision = cv2.resize(vision, (width, height))
     points.append((vals[4], vals[5]))
     drawPoints(img, points)
-    cv2.imshow("Output", img)
+    #img = np.concatenate((img,vision),axis=0)
+    cv2.imshow("Output", vision)
     cv2.waitKey(1)
