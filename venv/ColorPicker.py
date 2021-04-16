@@ -1,6 +1,7 @@
 from djitellopy import tello
 import cv2
 import numpy as np
+import KeypressModule as kp
 
 frameWidth = 480
 frameHeight = 360
@@ -27,14 +28,14 @@ cv2.createTrackbar("SAT Max", "HSV", 255, 255, empty)
 cv2.createTrackbar("VALUE Min", "HSV", 0, 255, empty)
 cv2.createTrackbar("VALUE Max", "HSV", 255, 255, empty)
 
-cap = cv2.VideoCapture(0)
+img = cv2.imread(r"C:\Users\alang\PycharmProjects\Drone1\Resources\Images\1612900400.1704762.jpg")
 frameCounter = 0
 
 while True:
 
     #img = drone.get_frame_read().frame
 
-    _, img = cap.read()
+    #_,img = cap.read()
 
     img = cv2.resize(img, (frameWidth, frameHeight))
     #img = cv2.flip(img,0)
@@ -58,6 +59,5 @@ while True:
     cv2.imshow('PP STACK', hStack)
     if cv2.waitKey(1) and 0xFF == ord('q'):
         break
-
 cap.release()
 cv2.destroyAllWindows()
