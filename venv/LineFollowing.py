@@ -8,7 +8,7 @@ print(drone.get_battery())
 drone.streamon()
 drone.takeoff()
 
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
 hsvVals_red = [166, 177, 0, 179, 255, 255]
 sensors = 3
 threshold = 0.2
