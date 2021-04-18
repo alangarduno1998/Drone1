@@ -9,6 +9,7 @@ frameWidth = 480
 frameHeight = 360
 
 
+
 #drone = tello.Tello()
 #drone.connect()
 #print(drone.get_battery())
