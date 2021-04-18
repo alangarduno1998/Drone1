@@ -30,8 +30,7 @@ def ColorPicker(img):
     cv2.createTrackbar("VALUE Min", "HSV", 0, 255, empty)
     cv2.createTrackbar("VALUE Max", "HSV", 255, 255, empty)
     while True:
-
-        img = cv2.resize(img, (frameWidth, frameHeight))
+        img = cv2.resize(img, (480, 360))
         imgHsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         h_min = cv2.getTrackbarPos("HUE Min", "HSV")
         h_max = cv2.getTrackbarPos("HUE Max", "HSV")
@@ -60,7 +59,6 @@ while True:
     img = cv2.imread(r"C:\Users\alang\PycharmProjects\Drone1\Resources\Images\*.jpg")
     img = ColorPicker(img)
     cv2.imshow("First Balloon",img)
-    img = 
     if cv2.waitKey(1) and 0xFF == ord('q'):
         break
     cap.release()
