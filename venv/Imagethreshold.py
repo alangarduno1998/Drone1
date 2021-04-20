@@ -12,7 +12,6 @@ def thresholding(img):
     mask = cv2.inRange(hsv, lower, upper)
     return mask
 
-
 def getContours(imgThres, img):
     contours, hierarchy = cv2.findContours(imgThres, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     biggest = max(contours, key=cv2.contourArea)
