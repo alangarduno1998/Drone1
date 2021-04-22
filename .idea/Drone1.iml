@@ -8,6 +8,5 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="pythonProject" />
     <orderEntry type="module" module-name="McNair" />
-    <orderEntry type="module" module-name="Capstone" />
   </component>
 </module>
