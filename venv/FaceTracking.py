@@ -131,7 +131,6 @@ def main(trackface=False, trackaruco=False):
                 for corners, id in zip(arucofound[0], arucofound[1]):
                     if int(id) in objdicts.keys():
                         frame, info[0], info[1] = findaruco(corners, id, frame, objdicts[int(id)], ArucoListC, ArucoListArea)
-
             pError = FaceTrack(drone, info, w, pid, pError, abRange)
             cv2.imshow('Display', frame)
         print("Center", info[0], "Area", info[1])
@@ -139,5 +138,6 @@ def main(trackface=False, trackaruco=False):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             drone.land
             break
+
 if __name__ == "__main__":
     main(trackface=False, trackaruco=True)
