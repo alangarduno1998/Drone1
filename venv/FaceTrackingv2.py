@@ -8,10 +8,8 @@ import os
 def initializeDrone():
     drone = tello.Tello()
     drone.connect()
-    drone.land()
-    time.sleep(2)
-    print(drone.get_battery())
     drone.streamon()
+    print(drone.get_battery())
     drone.takeoff()
     time.sleep(2)
     drone.send_rc_control(0,0,20,0)
@@ -49,7 +47,7 @@ def findaruco(corners, id, frame, frameembed, ArucoListC, ArucoListArea, drawId=
     cy = (corners[0][1][1] + corners[0][3][1]) // 2
     cv2.circle(frame, (int(cx), int(cy)), 5, (0, 255, 0), cv2.FILLED)
     ArucoListC.append([cx, cy])
-    area = cv2.contourArea(corners)
+    area = pow(cv2.contourArea(corners), 0.5)
     ArucoListArea.append(area)
     frameout = frame
     if len(ArucoListArea) != 0:
@@ -84,24 +82,21 @@ def FaceTrack(drone, info, w,h, pid, perror, fbRange):
     area = info[1]
     x,y = info[0]
     fb = 0
-    error = [x - w//2, h//2-y]
-    speed = [pid[0]*error[0] +pid[1]*(error[0]-perror[0]), pid[3]*error[1] +pid[4]*(error[1]-perror[1])]
+    error = [x - w//2, h//2-y, fbRange[0]-area]
+    speed = [pid[0]*error[0] +pid[1]*(error[0]-perror[0]), pid[3]*error[1] +pid[4]*(error[1]-perror[1]), pid[6]*error[2] +pid[7]*(error[2]-perror[2])]
     speed[0] = int(np.clip(speed[0], -100, 100))
     speed[1] = int(np.clip(speed[1],-100,100))
-    area = info[1]
-    if area > fbRange[0] and area < fbRange[1]:
-        fb = 0
-    elif area> fbRange[1]:
-        fb=-20
-    elif area < fbRange[0] and area !=0:
-        fb=20
+    speed[2] = int(np.clip(speed[2], -20, 20))
+    if area == 0:
+        speed[2] = 0
+        error[2] = 0
     if x == 0:
         speed[0] = 0
         error[0] = 0
     if y == 0:
         speed[1] = 0
         error[1] = 0
-    drone.send_rc_control(0, fb, speed[1], speed[0])
+    drone.send_rc_control(0, speed[2], speed[1], speed[0])
     return error
 
 
@@ -110,14 +105,14 @@ def main(trackface=False, trackaruco=False):
     objdicts = loadarucoimages("Objects")
     w, h = 360, 240
     fbRange = [6200, 6800]
-    abRange = [20000, 26000]
-    pid = [0.6, 0.7, 0, 0.7,0.8,0]
-    pError = [0,0]
+    abRange = [60, 65]
+    pid = [0.5, 0.9, 0, 0.7, 0.8, 0, 0.8, 0.8, 0]
+    pError = [0, 0, 0]
     while True:
         # -- using face set trackface to True in main()
         if trackface:
             img = drone.get_frame_read().frame
-            img = cv2.resize(img, (w, h))
+            img = cv2.resize(img, (w, h),interpolation=cv2.INTER_AREA)
             img, info = FindFace(img)
             pError = FaceTrack(drone, info, w,h, pid, pError, fbRange)
             cv2.imshow("Output", img)
@@ -137,10 +132,16 @@ def main(trackface=False, trackaruco=False):
             pError = FaceTrack(drone, info, w,h, pid, pError, abRange)
             cv2.imshow('Display', frame)
         print("Center", info[0], "Area", info[1])
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            drone.land
+        key = cv2.waitKey(1) & 0xff
+        # if key == 27:  # ESC
+        #     break
+        # elif key == ord('w'):
+        #     tello.move_forward(30)
+        if key== 27:
+            drone.land()
             break
+        elif key == ord('l'):
+            drone.land()
 
 
 if __name__ == "__main__":
