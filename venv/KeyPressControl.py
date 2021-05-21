@@ -1,10 +1,6 @@
 from djitellopy import tello
 import KeypressModule as kp
-
-
-
 kp.init()
-
 drone = tello.Tello()
 drone.connect()
 print(drone.get_battery())

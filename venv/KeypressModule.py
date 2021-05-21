@@ -3,10 +3,7 @@ import pygame
 def init():
     pygame.init()
     win = pygame.display.set_mode((400,400))
-
-
 #this function is to get the key presses
-
 def getKey(keyName):
     ans = False
     for eve in pygame.event.get(): pass
@@ -16,8 +13,6 @@ def getKey(keyName):
         ans = True
     pygame.display.update()
     return ans
-
-
 
 def main():
    if getKey("LEFT"):

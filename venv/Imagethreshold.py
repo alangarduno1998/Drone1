@@ -20,16 +20,12 @@ def getContours(imgThres, img):
     cy = y + h // 2
     cv2.drawContours(img, biggest, -1, (255,0,255), 7)
     cv2.circle(img, (cx, cy), 10, (0, 255, 0), cv2.FILLED)
-
     return cx
 
 while True:
     img = cv2.imread(r"C:\Users\alang\PycharmProjects\Drone1\Resources\Images\1612900400.1704762.jpg")
     img = cv2.resize(img, (width, height))
-    img = cv2.flip(img, 0)
-
     imgThres = thresholding(img)
-
     cx = getContours(imgThres, img)  # for translation
     cv2.imshow("Output", img)
     cv2.imshow("Path", imgThres)

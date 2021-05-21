@@ -7,18 +7,14 @@ print(drone.get_battery())
 
 drone.streamon()
 drone.takeoff()
-
 #cap = cv2.VideoCapture(0)
 hsvVals_red = [166, 177, 0, 179, 255, 255]
 sensors = 3
 threshold = 0.2
 width, height = 480, 360
-
 sensitivity = 3
-
 weights = [-25, -15, 0, 15, 25]
 fSpeed = 15
-
 curve = 0
 
 def thresholding(img):
@@ -27,8 +23,6 @@ def thresholding(img):
     upper = np.array([hsvVals_red[3], hsvVals_red[4], hsvVals_red[5]])
     mask = cv2.inRange(hsv, lower, upper)
     return mask
-
-
 def getContours(imgThres, img):
     contours, hierarchy = cv2.findContours(imgThres, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     biggest = max(contours, key=cv2.contourArea)
@@ -37,12 +31,8 @@ def getContours(imgThres, img):
     cy = y + h // 2
     cv2.drawContours(img, biggest, -1, (255,0,255), 7)
     cv2.circle(img, (cx, cy), 10, (0, 255, 0), cv2.FILLED)
-
     return cx
-
-
 def getSensorOutput(imgThres, sensors):
-
     imgs = np.hsplit(imgThres, sensors)
     totalPixels = (img.shape[1]//sensors) * img.shape[0]
     senOut= []
@@ -55,8 +45,6 @@ def getSensorOutput(imgThres, sensors):
         cv2.imshow(str(x), im)
     print(senOut)
     return senOut
-
-
 def sendCommands(senOut, cx):
     global curve
 
@@ -78,7 +66,6 @@ def sendCommands(senOut, cx):
 
 
     drone.send_rc_control(lr,fSpeed,0,curve)
-
 while True:
     #_, img = cap.read()
     img = drone.get_frame_read().frame

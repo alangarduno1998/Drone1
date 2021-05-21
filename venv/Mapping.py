@@ -15,11 +15,9 @@ height = 240
 ###########################################
 x, y, yaw, a= 500, 500, 0, 0
 kp.init()
-
 drone = tello.Tello()
 drone.connect()
 print(drone.get_battery())
-
 points = []
 def getKeyboardInput():
     lr, fb, ud, yv = 0, 0, 0, 0
@@ -69,12 +67,9 @@ def getKeyboardInput():
     y += int(d * math.sin(math.radians(a)))
 
     return [lr, fb, ud, yv, x, y]
-
 def drawPoints(img, points):
     for point in points:
         cv2.circle(img, point, 5, (0, 0, 255), cv2.FILLED)
-
-
 while True:
     vals = getKeyboardInput()
     drone.send_rc_control(vals[0], vals[1], vals[2], vals[3])
@@ -85,6 +80,5 @@ while True:
     vision = cv2.resize(vision, (width, height))
     points.append((vals[4], vals[5]))
     drawPoints(img, points)
-    #img = np.concatenate((img,vision),axis=0)
     cv2.imshow("Output", vision)
     cv2.waitKey(1)
