@@ -43,6 +43,7 @@ def arucotrack(drone, info, w,h, pd, perror, abRange):
     area = info[1]
     x,y = info[0]
     error = (x - w//2, h//2-y, abRange[0]-area)
+    i=[perror + 0.4*error[0]]
     speed = (pd[0]*error[0] +pd[1]*(error[0]-perror[0]), pd[2]*error[1] +pd[3]*(error[1]-perror[1]), pd[4]*error[2] +pd[5]*(error[2]-perror[2]))
     yaw = int(np.clip(speed[0], -100, 100)) if x != 0 else 0
     attitude = int(np.clip(speed[1],-100,100)) if y !=0 else 0
