@@ -1,19 +1,7 @@
-from djitellopy import tello
 import cv2
 import numpy as np
-import KeypressModule as kp
 
-frameWidth = 480
-frameHeight = 360
-
-
-#drone = tello.Tello()
-#drone.connect()
-#print(drone.get_battery())
-#drone.streamon()
-
-
-
+frameWidth, frameHeight = 480, 360
 
 def empty(a):
     pass
@@ -32,9 +20,7 @@ img = cv2.imread(r"C:\Users\alang\PycharmProjects\Drone1\Resources\Images\161290
 frameCounter = 0
 
 while True:
-
     #img = drone.get_frame_read().frame
-
     #_,img = cap.read()
 
     img = cv2.resize(img, (frameWidth, frameHeight))

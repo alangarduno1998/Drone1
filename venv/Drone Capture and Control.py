@@ -1,50 +1,55 @@
 from djitellopy import tello
-from time import sleep
-import cv2
-import KeypressModule as kp
-
-kp.init()
-
+import keyboard as kb
+import time, cv2
 drone = tello.Tello()
 drone.connect()
+drone.streamon()
+time.sleep(2)
 print(drone.get_battery())
 
-drone.streamon()
-
-def getKeyboardInput():
+def getKeyBoardInput():
     lr, fb, ud, yv = 0, 0, 0, 0
-    speed = 50
+    speed = 100
 
-    if kp.getKey("LEFT"):
+    if kb.is_pressed("LEFT"):
         lr = -speed
-    elif kp.getKey("RIGHT"):
+        time.sleep(0.05)
+    elif kb.is_pressed("RIGHT"):
         lr = speed
-
-    if kp.getKey("UP"):
+        time.sleep(0.05)
+    if kb.is_pressed("UP"):
         fb = speed
-    elif kp.getKey("DOWN"):
+        time.sleep(0.05)
+    elif kb.is_pressed("DOWN"):
         fb = -speed
+        time.sleep(0.05)
 
-    if kp.getKey("w"):
-        ud = speed
-    elif kp.getKey("s"):
+    if kb.is_pressed("w"):
+        ud= speed
+        time.sleep(0.05)
+    elif kb.is_pressed("s"):
         ud = -speed
+        time.sleep(0.05)
 
-    if kp.getKey("a"):
+    if kb.is_pressed("d"):
         yv = speed
-    elif kp.getKey("d"):
+        time.sleep(0.05)
+    elif kb.is_pressed("a"):
         yv = -speed
-    if kp.getKey("q"):
-        drone.land()
-    elif kp.getKey("e"):
-        drone.takeoff()
+        time.sleep(0.05)
+    if kb.is_pressed("z"):
+        cv2.imwrite(f'Resources/Images/{time.time()}.jpg',img)
+        time.sleep(0.3)
 
-    return[lr, fb, ud, yv]
+    if kb.is_pressed("l"): drone.land()
+    elif kb.is_pressed("t"): drone.takeoff()
+
+    return [lr, fb, ud, yv]
 
 while True:
-    vals = getKeyboardInput()
-    drone.send_rc_control(vals[0], vals[1], vals[2], vals[3])
     img = drone.get_frame_read().frame
     img = cv2.resize(img, (360, 240))
     cv2.imshow("Image", img)
+    vals = getKeyBoardInput()
+    drone.send_rc_control(vals[0], vals[1], vals[2], vals[3])
     cv2.waitKey(1)

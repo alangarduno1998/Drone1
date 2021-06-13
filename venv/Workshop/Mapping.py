@@ -1,5 +1,5 @@
 from djitellopy import tello
-import KeypressModule as kp
+from venv.Workshop import KeypressModule as kp
 import numpy as np
 import cv2
 from time import sleep
@@ -74,7 +74,6 @@ while True:
     vals = getKeyboardInput()
     drone.send_rc_control(vals[0], vals[1], vals[2], vals[3])
     sleep(0.05)
-
     img = np.zeros((1000, 1000, 3), np.uint8)
     vision = drone.get_frame_read().frame
     vision = cv2.resize(vision, (width, height))

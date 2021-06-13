@@ -15,8 +15,6 @@ def initializeDrone():
     drone.send_rc_control(0,0,20,0)
     time.sleep(2.2)
     return drone
-
-
 def loadarucoimages(path):
     objectlist = os.listdir(path)
     numofmarkers = len(objectlist)
@@ -27,8 +25,6 @@ def loadarucoimages(path):
         frameembed = cv2.imread(f'{path}/{imgpath}')
         objdicts[key] = frameembed
     return objdicts
-
-
 def findarucomarkers(frame, markersize = 4, totalmarkers=50, draw=True):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     key = getattr(aruco, f'DICT_{markersize}X{markersize}_{totalmarkers}')
@@ -40,8 +36,6 @@ def findarucomarkers(frame, markersize = 4, totalmarkers=50, draw=True):
     if draw:
         display = aruco.drawDetectedMarkers(frame, corners, ids)
     return [corners, ids]
-
-
 def findaruco(corners, id, frame, frameembed, ArucoListC, ArucoListArea, drawId=True):
     cx = (corners[0][1][0] + corners[0][3][0]) // 2
     cy = (corners[0][1][1] + corners[0][3][1]) // 2
@@ -55,8 +49,6 @@ def findaruco(corners, id, frame, frameembed, ArucoListC, ArucoListArea, drawId=
         return frameout, ArucoListC[i], ArucoListArea[i]
     else:
         return frameout, [0,0], 0
-
-
 def FindFace(img):
     faceCascade = cv2.CascadeClassifier("Resources/haarcascade.xml ")
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -76,8 +68,6 @@ def FindFace(img):
         return img, [myFaceListC[i], myFaceListArea[i]]
     else:
         return img, [[0, 0], 0]
-
-
 def FaceTrack(drone, info, w,h, pid, perror, fbRange):
     area = info[1]
     x,y = info[0]
