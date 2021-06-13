@@ -94,13 +94,11 @@ def main(trackface=False, trackaruco=False):
     pid = [0.5, 0.9, 0, 0.7, 0.8, 0, 0.8, 0.8, 0]
     pError = [0, 0, 0]
     while True:
-        # -- using face set trackface to True in main()
         frame = drone.get_frame_read().frame
         frame = cv2.resize(frame, (w, h), interpolation=cv2.INTER_AREA)
         if trackface:
             frame, info = FindFace(frame)
             pError = FaceTrack(drone, info, w,h, pid, pError, fbRange)
-        # -- using aruco tags set trackaruco to True in main()
         if trackaruco:
             AListA, AListC, info = [], [], [[0, 0], 0]
             arucofound = findarucofeatures(frame, arucoparameters, aruco_dict)
