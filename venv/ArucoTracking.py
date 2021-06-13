@@ -24,7 +24,7 @@ def loadarucoimages(path):
         frameembed = cv2.imread(f'{path}/{imgpath}')
         objdicts[key] = frameembed
     return objdicts
-def findarucomarkers(frame, arucoparameters, aruco_dict, draw=True):
+def findarucofeatures(frame, arucoparameters, aruco_dict, draw=True):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     corners, ids, rejectedimgpoints = aruco.detectMarkers(gray, aruco_dict, parameters = arucoparameters)
     if draw:
@@ -64,7 +64,7 @@ def main():
         frame = drone.get_frame_read().frame
         frame = cv2.resize(frame, (w, h), interpolation=cv2.INTER_AREA)
         AListA, AListC, info = [], [], [[0, 0], 0]
-        arucofound = findarucomarkers(frame, arucoparameters, aruco_dict)
+        arucofound = findarucofeatures(frame, arucoparameters, aruco_dict)
         if len(arucofound[0]) != 0:
             for corners, id in zip(arucofound[0], arucofound[1]):
                 if int(id) in objdicts.keys():

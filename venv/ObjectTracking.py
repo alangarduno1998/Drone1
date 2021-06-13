@@ -1,54 +1,47 @@
 from djitellopy import tello
 import numpy as np
-import cv2
-import time
+import cv2, time, os
 import cv2.aruco as aruco
-import os
 
-def initializeDrone():
-    drone = tello.Tello()
+def initializeDrone(drone):
     drone.connect()
     drone.streamon()
     print(drone.get_battery())
     drone.takeoff()
+    time.sleep(4)
+    drone.send_rc_control(0, 0, 20, 0)
     time.sleep(2)
-    drone.send_rc_control(0,0,20,0)
-    time.sleep(2.2)
     return drone
+def loadarucoparam(markersize=4, totalmarkers=50):
+    key = getattr(aruco, f'DICT_{markersize}X{markersize}_{totalmarkers}')
+    # key = getattr(aruco, f'DICT_ARUCO_ORIGINAL')
+    aruco_dict = aruco.Dictionary_get(key)
+    arucoparameters = aruco.DetectorParameters_create()
+    return arucoparameters, aruco_dict
 def loadarucoimages(path):
     objectlist = os.listdir(path)
-    numofmarkers = len(objectlist)
-    #print("Total Number of Objects:", numofmarkers)
     objdicts = {}
     for imgpath in objectlist:
         key = int(os.path.splitext(imgpath)[0])
         frameembed = cv2.imread(f'{path}/{imgpath}')
         objdicts[key] = frameembed
     return objdicts
-def findarucomarkers(frame, markersize = 4, totalmarkers=50, draw=True):
+def findarucofeatures(frame, arucoparameters, aruco_dict, draw=True):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    key = getattr(aruco, f'DICT_{markersize}X{markersize}_{totalmarkers}')
-    # key = getattr(aruco, f'DICT_APRILTAG_36H11')
-    aruco_dict = aruco.Dictionary_get(key)
-    arucoparameters = aruco.DetectorParameters_create()
     corners, ids, rejectedimgpoints = aruco.detectMarkers(gray, aruco_dict, parameters = arucoparameters)
-    # print(ids)
     if draw:
         display = aruco.drawDetectedMarkers(frame, corners, ids)
     return [corners, ids]
-def findaruco(corners, id, frame, frameembed, ArucoListC, ArucoListArea, drawId=True):
-    cx = (corners[0][1][0] + corners[0][3][0]) // 2
-    cy = (corners[0][1][1] + corners[0][3][1]) // 2
-    cv2.circle(frame, (int(cx), int(cy)), 5, (0, 255, 0), cv2.FILLED)
-    ArucoListC.append([cx, cy])
-    area = pow(cv2.contourArea(corners), 0.5)
-    ArucoListArea.append(area)
-    frameout = frame
-    if len(ArucoListArea) != 0:
-        i = ArucoListArea.index(max(ArucoListArea))
-        return frameout, ArucoListC[i], ArucoListArea[i]
+def findaruco(cs, id, frame, frameembed, AListC, AListA):
+    cx, cy = (cs[0][1][0] + cs[0][3][0]) // 2, (cs[0][1][1] + cs[0][3][1]) // 2
+    area = round(pow(cv2.contourArea(cs), 0.5))
+    # cv2.circle(frame, (int(cx), int(cy)), 5, (0, 255, 0), cv2.FILLED)
+    AListC.append((cx, cy)), AListA.append(area)
+    if len(AListA) != 0:
+        i = AListA.index(max(AListA))
+        return frame, AListC[i], AListA[i]
     else:
-        return frameout, [0,0], 0
+        return frame, [0,0], 0
 def FindFace(img):
     faceCascade = cv2.CascadeClassifier("Resources/haarcascade.xml ")
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -91,7 +84,9 @@ def FaceTrack(drone, info, w,h, pid, perror, fbRange):
 
 
 def main(trackface=False, trackaruco=False):
-    drone = initializeDrone()
+    drone = tello.Tello()
+    initializeDrone(drone)
+    arucoparameters, aruco_dict=loadarucoparam()
     objdicts = loadarucoimages("Objects")
     w, h = 360, 240
     fbRange = [6200, 6800]
@@ -100,39 +95,25 @@ def main(trackface=False, trackaruco=False):
     pError = [0, 0, 0]
     while True:
         # -- using face set trackface to True in main()
+        frame = drone.get_frame_read().frame
+        frame = cv2.resize(frame, (w, h), interpolation=cv2.INTER_AREA)
         if trackface:
-            img = drone.get_frame_read().frame
-            img = cv2.resize(img, (w, h),interpolation=cv2.INTER_AREA)
-            img, info = FindFace(img)
+            frame, info = FindFace(frame)
             pError = FaceTrack(drone, info, w,h, pid, pError, fbRange)
-            cv2.imshow("Output", img)
         # -- using aruco tags set trackaruco to True in main()
         if trackaruco:
-            frame = drone.get_frame_read().frame
-            frame = cv2.resize(frame, (w, h))
-            loadarucoimages("Objects")
-            ArucoListArea = []
-            ArucoListC = []
-            info = [[0, 0], 0]
-            arucofound = findarucomarkers(frame)
+            AListA, AListC, info = [], [], [[0, 0], 0]
+            arucofound = findarucofeatures(frame, arucoparameters, aruco_dict)
             if len(arucofound[0]) != 0:
                 for corners, id in zip(arucofound[0], arucofound[1]):
                     if int(id) in objdicts.keys():
-                        frame, info[0], info[1] = findaruco(corners, id, frame, objdicts[int(id)], ArucoListC, ArucoListArea)
+                        frame, info[0], info[1] = findaruco(corners, id, frame, objdicts[int(id)], AListC, AListA)
             pError = FaceTrack(drone, info, w,h, pid, pError, abRange)
-            cv2.imshow('Display', frame)
+        cv2.imshow('Display', frame)
         print("Center", info[0], "Area", info[1])
-        key = cv2.waitKey(1) & 0xff
-        # if key == 27:  # ESC
-        #     break
-        # elif key == ord('w'):
-        #     tello.move_forward(30)
-        if key== 27:
+        if cv2.waitKey(1) & 0xff == 27:
             drone.land()
             break
-        elif key == ord('l'):
-            drone.land()
-
 
 if __name__ == "__main__":
     main(trackface=False, trackaruco=True)
