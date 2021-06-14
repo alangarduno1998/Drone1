@@ -16,7 +16,7 @@ cv2.createTrackbar("SAT Max", "HSV", 255, 255, empty)
 cv2.createTrackbar("VALUE Min", "HSV", 0, 255, empty)
 cv2.createTrackbar("VALUE Max", "HSV", 255, 255, empty)
 
-img = cv2.imread(r"C:\Users\alang\PycharmProjects\Drone1\Resources\Images\1612900400.1704762.jpg")
+img = cv2.imread(r"C:\Users\alang\PycharmProjects\Drone1\venv\Resources\Images\1612900729.5252619.jpg")
 frameCounter = 0
 
 while True:
@@ -38,12 +38,11 @@ while True:
     upper = np.array([h_max, s_max, v_max])
     mask = cv2.inRange(imgHsv, lower, upper)
     result = cv2.bitwise_and(img, img, mask=mask)
-    print(f'[{h_min}, {s_min}, {v_min}, {h_max}, {s_max}, {v_max}]')
+    print(f'([{h_min}, {s_min}, {v_min}], [{h_max}, {s_max}, {v_max}])')
 
     mask= cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
     hStack = np.hstack([img, mask, result])
     cv2.imshow('PP STACK', hStack)
     if cv2.waitKey(1) and 0xFF == ord('q'):
         break
-cap.release()
 cv2.destroyAllWindows()
