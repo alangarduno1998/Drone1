@@ -29,7 +29,7 @@ def FindFace(img):
         myFaceListC.append([cx, cy])
         myFaceListArea.append(area)
     if len(myFaceListArea) != 0:
-        i = myFaceListArea.index(max(myFaceListArea))
+        i = myFaceListArea.index(max(myFaceListArea)) # index of largest value in area list
         return img, [myFaceListC[i], myFaceListArea[i]]
     else:
         return img, [[0, 0], 0]
@@ -61,13 +61,13 @@ def main():
     w, h = 360, 240
     fbRange = [6200, 6800]
     abRange = [20000, 26000]
-    pd = [0.6, 0.7, 0, 0.7,0.8,0]
-    pError = [0,0]
+    pd = [0.6, 0.7, 0, 0.7, 0.8, 0]
+    pError = [0, 0]
     while True:
         img = drone.get_frame_read().frame
         img = cv2.resize(img, (w, h))
         img, info = FindFace(img)
-        pError = FaceTrack(drone, info, w,h, pd, pError, fbRange)
+        pError = FaceTrack(drone, info, w, h, pd, pError, fbRange)
         cv2.imshow("Output", img)
         print("Center", info[0], "Area", info[1])
         if cv2.waitKey(1) & 0xFF == ord('q'):
