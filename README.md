@@ -24,3 +24,4 @@ This repository allows you to navigate the DJI Ryze Tello using different method
 
 Thank you for checking out my repository, if you use any of this please cite me.
 -- Alan Garduno
+## Disclaimer
