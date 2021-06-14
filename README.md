@@ -24,4 +24,8 @@ This repository allows you to navigate the DJI Ryze Tello using different method
 
 Thank you for checking out my repository, if you use any of this please cite me.
 -- Alan Garduno
-## Disclaimer
+## Drone Control using KeyBoard
+### Installation
+`pip3 install numpy opencv-python opencv-contrib-python djitellopy keyboard`
+To run script use:
+`python venv\Drone Capture and Control.py`
