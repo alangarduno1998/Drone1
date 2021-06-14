@@ -27,5 +27,22 @@ Thank you for checking out my repository, if you use any of this please cite me.
 ## Drone Control using KeyBoard
 ### Installation
 `pip3 install numpy opencv-python opencv-contrib-python djitellopy keyboard`
-To run script use:
+
+#### Turn on DJI Ryze Tello and connect to its WiFi
+####To run script use:
+
 `python venv\Drone Capture and Control.py`
+
+### Use:
++ 't' - takeoff
++ 'l' - land
++ 'LEFT' - move left
++ 'RIGHT' - move right
++ 'UP' - move forward
++ 'DOWN' - move back
++ 'w' - move up
++ 's' - move down
++ 'a' - rotate counter clock-wise
++ 'd' - rotate clock-wise
++ 'z' - take picture and save to file location
+####
