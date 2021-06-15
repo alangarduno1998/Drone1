@@ -5,10 +5,10 @@ This repository allows you to navigate the DJI Ryze Tello using different method
 + DJI Ryze Tello
 
 ### Current Features
-- Drone Control using KeyBoard
+- Drone Capture & Control using KeyBoard
+- Color Tracking
 - Aruco Marker Tracking
 - Face Tracking
-- Color Tracking
 
 ### Requirements
 + Python 3
@@ -24,7 +24,7 @@ This repository allows you to navigate the DJI Ryze Tello using different method
 
 Thank you for checking out my repository, if you use any of this please cite me.
 -- Alan Garduno
-## Drone Control using KeyBoard
+## Drone Capture & Control using KeyBoard
 ### Installation
 `pip3 install numpy opencv-python opencv-contrib-python djitellopy keyboard`
 
@@ -33,7 +33,7 @@ Thank you for checking out my repository, if you use any of this please cite me.
 
 `python venv\Drone Capture and Control.py`
 
-### Use:
+### Control:
 + 't' - takeoff
 + 'l' - land
 + 'LEFT' - move left
@@ -44,5 +44,13 @@ Thank you for checking out my repository, if you use any of this please cite me.
 + 's' - move down
 + 'a' - rotate counter clock-wise
 + 'd' - rotate clock-wise
+,
+### Capture:
 + 'z' - take picture and save to file location
-####
+
+#### Taking picture saves into file venv\Resources\Images
+![Alt text](https://github.com/alangarduno1998/Drone1/tree/master/venv/readmeImages/DroneCapture.png "Drone Capture")
+
++ Picture is taken during Drone Capture and Control to do some color thresholding on the four balloons
+
+###
