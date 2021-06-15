@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
-
-frameWidth, frameHeight = 480, 360
+import time
+frameWidth, frameHeight = 420, 360
 
 def empty(a):
     pass
@@ -42,7 +42,8 @@ while True:
 
     mask= cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
     hStack = np.hstack([img, mask, result])
-    cv2.imshow('PP STACK', hStack)
+    cv2.imshow('Color Picking Stack', hStack)
+    time.sleep(0.3)
     if cv2.waitKey(1) and 0xFF == ord('q'):
         break
 cv2.destroyAllWindows()

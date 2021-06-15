@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 # cap = cv2.VideoCapture(0)
-hsvVals_red = ([0, 154, 100], [20, 255, 255])
+hsvVals_red = ([0, 187, 0], [4, 255, 255])
 hsvVals_blue = ([50, 64, 42], [108, 255, 245])
 hsvVals_yellow = ([23, 39, 123], [29, 255, 255])
 hsvVals_orange = ([5, 125, 43], [9, 255, 255])
