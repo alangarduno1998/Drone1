@@ -54,4 +54,17 @@ Thank you for checking out my repository, if you use any of this please cite me.
 
 + Picture is taken during Drone Capture and Control to do some color thresholding on the four balloons
 
-###
+## Color Tracking
+For this feature you will need to use the Color Picker and Color Threshold scripts
+
+###Color Picker
+Use Color Picker to determine the HSV minimum and maximum values of the color of the object you wish to track.
+####To run script use:
+`python venv\ColorPicker.py`
+#### Using picture saved from the Drone Capture & Control using KeyBoard section in file venv\Resources\Images or using your own image, slide the trackbar to extract the color feature of the object you wish to track.
+![Alt text](https://github.com/alangarduno1998/Drone1/tree/master/readmeImages/ColorPicker.png "Color Picker")
+
++ Color Picking Stack(left) - original image included from file
++ Color Picking Stack(middle) - binary mask of image from using the HSV Trackbar
++ Color Picking Stack(right) - output image after applying mask from using the HSV Trackbar
++ HSV Trackbar - hue min/max, saturation min/max, vibrance min/max
