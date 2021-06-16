@@ -57,9 +57,9 @@ Thank you for checking out my repository, if you use any of this please cite me.
 ## Color Tracking
 For this feature you will need to use the Color Picker and Color Threshold scripts
 
-###Color Picker
+### Color Picker
 Use Color Picker to determine the HSV minimum and maximum values of the color of the object you wish to track.
-####To run script use:
+#### To run script use:
 `python venv\ColorPicker.py`
 #### Using picture saved from the Drone Capture & Control using KeyBoard section in file venv\Resources\Images or using your own image, slide the trackbar to extract the color feature of the object you wish to track.
 ![ColorPicker](https://github.com/alangarduno1998/Drone1/blob/master/readmeImages/ColorPicker.png "Color Picker")
@@ -74,9 +74,9 @@ Use Color Picker to determine the HSV minimum and maximum values of the color of
 
 + HSV Trackbar - ([0, 187, 0], [4, 255, 255])
 
-###Color Threshold
+### Color Threshold
 Use Color Threshold to determine the contours of the HSV values of the object you wish to track.
-####To run script use:
+#### To run script use:
 `python venv\ColorThreshold.py`
 #### Using hsv values from the ColorPicker section, set a variable that contains the tuple of the hsv values and include it in the boundaries list.
 ![ColorThreshold](https://github.com/alangarduno1998/Drone1/blob/master/readmeImages/ColorThreshold.png "Color Threshold")
@@ -86,3 +86,20 @@ Use Color Threshold to determine the contours of the HSV values of the object yo
 + (topright) hsvVals_blue = ([50, 64, 42], [108, 255, 245])
 + (bottomleft) hsvVals_yellow = ([23, 39, 123], [29, 255, 255])
 + (bottom right) hsvVals_orange = ([5, 125, 43], [9, 255, 255])
+
+## Face Tracking
+For this feature you will need to use the ObjectTracking script
+
+#### Turn on DJI Ryze Tello and connect to its WiFi
+Use ObjectTracking to follow your face with the haarcascade classifier (venv/Resources/haarcascade.xml).
+#### To run script use:
+`python venv\ObjectTracking.py`
+
+## Aruco Marker Tracking
+For this feature you will need to use the Aruco Tracking script
+
+#### Turn on DJI Ryze Tello and connect to its WiFi
+### Color Picker
+Use Aruco Tracking to follow the Aruco marker ( id = 0) using the ArUco libraries from tag system 4x4_50.
+#### To run script use:
+`python venv\ArucoTracking.py`
