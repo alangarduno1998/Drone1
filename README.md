@@ -80,3 +80,9 @@ Use Color Threshold to determine the contours of the HSV values of the object yo
 `python venv\ColorThreshold.py`
 #### Using hsv values from the ColorPicker section, set a variable that contains the tuple of the hsv values and include it in the boundaries list.
 ![ColorThreshold](https://github.com/alangarduno1998/Drone1/blob/master/readmeImages/ColorThreshold.png "Color Threshold")
+
+#### Total contours taken:
++ (topleft) hsvVals_red = ([0, 187, 0], [4, 255, 255])
++ (topright) hsvVals_blue = ([50, 64, 42], [108, 255, 245])
++ (bottomleft) hsvVals_yellow = ([23, 39, 123], [29, 255, 255])
++ (bottom right) hsvVals_orange = ([5, 125, 43], [9, 255, 255])
