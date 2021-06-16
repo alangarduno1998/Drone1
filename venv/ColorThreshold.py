@@ -52,12 +52,12 @@ def getContours(imgThres, img, ColorListC, ColorListA):
     return ColorListC, ColorListA
 
 while True:
-    img = cv2.imread(r"C:\Users\alang\PycharmProjects\Drone1\venv\Resources\Images\1612900652.6954453.jpg")
+    img = cv2.imread(r"C:\Users\alang\PycharmProjects\Drone1\venv\Resources\Images\1612900729.5252619.jpg")
     img = cv2.resize(img, (width, height))
     ColorListA, ColorListC, info = [], [], [[0, 0], 0]
     img, info = multipleContours(img, ColorListC, ColorListA)
     print(info)
-    cv2.imshow("Output", img)
+    cv2.imshow("Color Threshold", img)
     # imgThres = thresholding(img)
     # ColorListC, ColorListA = getContours(imgThres, img, ColorListC, ColorListA)  # for translation
     # print(ColorListC, ColorListA)
