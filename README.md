@@ -50,7 +50,7 @@ Thank you for checking out my repository, if you use any of this please cite me.
 
 #### Taking picture saves into file venv\Resources\Images
 
-![Alt text](https://github.com/alangarduno1998/Drone1/tree/master/readmeImages/DroneCapture.png "Drone Capture")
+![Alt text](https://github.com/alangarduno1998/Drone1/blob/master/readmeImages/DroneCapture.png "Drone Capture")
 
 + Picture is taken during Drone Capture and Control to do some color thresholding on the four balloons
 
