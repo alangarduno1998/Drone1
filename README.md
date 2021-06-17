@@ -99,7 +99,6 @@ Use ObjectTracking to follow your face with the haarcascade classifier (venv/Res
 For this feature you will need to use the Aruco Tracking script
 
 #### Turn on DJI Ryze Tello and connect to its WiFi
-### Color Picker
 Use Aruco Tracking to follow the Aruco marker ( id = 0) using the ArUco libraries from tag system 4x4_50.
 #### To run script use:
 `python venv\ArucoTracking.py`
