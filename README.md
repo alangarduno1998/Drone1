@@ -87,14 +87,6 @@ Use Color Threshold to determine the contours of the HSV values of the object yo
 + (bottomleft) hsvVals_yellow = ([23, 39, 123], [29, 255, 255])
 + (bottom right) hsvVals_orange = ([5, 125, 43], [9, 255, 255])
 
-## Face Tracking
-For this feature you will need to use the ObjectTracking script
-
-#### Turn on DJI Ryze Tello and connect to its WiFi
-Use ObjectTracking to follow your face with the haarcascade classifier (venv/Resources/haarcascade.xml).
-#### To run script use:
-`python venv\ObjectTracking.py`
-
 ## Aruco Marker Tracking
 For this feature you will need to use the Aruco Tracking script
 
@@ -102,3 +94,13 @@ For this feature you will need to use the Aruco Tracking script
 Use Aruco Tracking to follow the Aruco marker ( id = 0) using the ArUco libraries from tag system 4x4_50.
 #### To run script use:
 `python venv\ArucoTracking.py`
+#### This work below tracks any tag using the libraries and can be set in the code. 
+![ArucoTracking](https://github.com/alangarduno1998/Drone1/blob/master/readmeImages/ArucoTracking.png "Aruco Tracking")
+
+## Face Tracking
+For this feature you will need to use the ObjectTracking script
+
+#### Turn on DJI Ryze Tello and connect to its WiFi
+Use ObjectTracking to follow your face with the haarcascade classifier (venv/Resources/haarcascade.xml).
+#### To run script use:
+`python venv\ObjectTracking.py`
